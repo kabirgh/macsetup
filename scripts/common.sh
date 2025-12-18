@@ -34,6 +34,7 @@ BREW_PACKAGES=(
 CASK_APPS=(
     1password
     brave-browser
+    docker
     ghostty
     rectangle
     scroll-reverser

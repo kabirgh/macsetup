@@ -64,10 +64,24 @@ if command -v mise &>/dev/null; then
     add_line_if_missing "$MISE_CONFIG" '[settings]'
     add_line_if_missing "$MISE_CONFIG" 'python.uv_venv_auto = true'
     
-    # Install tools globally
-    mise use --global node@lts 2>>"$LOG_FILE" && echo "  ✅ node" || echo "  ❌ node"
-    mise use --global bun@latest 2>>"$LOG_FILE" && echo "  ✅ bun" || echo "  ❌ bun"
-    mise use --global uv@latest 2>>"$LOG_FILE" && echo "  ✅ uv" || echo "  ❌ uv"
+    # Install tools globally (check if already installed first)
+    if mise ls node 2>/dev/null | grep -q "node"; then
+        echo "  ✅ node (exists)"
+    else
+        mise use --global node@lts 2>>"$LOG_FILE" && echo "  ✅ node" || echo "  ❌ node"
+    fi
+    
+    if mise ls bun 2>/dev/null | grep -q "bun"; then
+        echo "  ✅ bun (exists)"
+    else
+        mise use --global bun@latest 2>>"$LOG_FILE" && echo "  ✅ bun" || echo "  ❌ bun"
+    fi
+    
+    if mise ls uv 2>/dev/null | grep -q "uv"; then
+        echo "  ✅ uv (exists)"
+    else
+        mise use --global uv@latest 2>>"$LOG_FILE" && echo "  ✅ uv" || echo "  ❌ uv"
+    fi
     
     # Install global bun packages
     if command -v bun &>/dev/null; then
