@@ -40,6 +40,50 @@ else
 fi
 
 add_block_if_missing "$ZSHRC" '# Aliases
+## -- start git --
+unalias gb
+function gb {
+  git --no-pager branch | cat -n
+}
+
+unalias gco
+function gco {
+  git checkout $(git branch | cut -c 3- | sed -n "${1}p")
+}
+
+unalias gbd
+function gbd {
+  local branches=()
+  for num in $@
+  do
+    branches+=$(git branch | cut -c 3- | sed -n "${num}p")
+  done
+
+  git branch -D "${branches[@]}"
+}
+
+### rebase
+function gri {
+  branch=${1:-master}
+  git fetch origin $branch:$branch
+  git rebase -i $branch
+}
+
+function grc {
+  git rebase --continue
+}
+
+### misc 
+function grso {
+  git reset --soft HEAD~${1:-1}
+}
+
+function gcap {
+  git add . && git commit -m "$1" && ggp
+}
+
+## -- end git --
+
 alias sz="source ~/.zshrc"
 alias cz="cursor ~/.zshrc"
 '
