@@ -87,12 +87,6 @@ if command -v mise &>/dev/null; then
     if command -v bun &>/dev/null; then
         BUN_GLOBAL_DIR="$HOME/.bun/install/global/node_modules"
         
-        if [ -d "$BUN_GLOBAL_DIR/@anthropic-ai/claude-code" ]; then
-            echo "  ✅ claude-code (exists)"
-        else
-            CI=1 bun install -g @anthropic-ai/claude-code 2>>"$LOG_FILE" && echo "  ✅ claude-code" || echo "  ❌ claude-code"
-        fi
-        
         if [ -d "$BUN_GLOBAL_DIR/@openai/codex" ]; then
             echo "  ✅ codex (exists)"
         else

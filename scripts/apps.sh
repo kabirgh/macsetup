@@ -14,7 +14,7 @@ if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
 fi
 
 # =============================================================================
-# INSTALL GUI APPLICATIONS
+# INSTALL GUI APPLICATIONS WITH BREW
 # =============================================================================
 
 print_section "Installing applications (${#CASK_APPS[@]} total)"
@@ -37,6 +37,17 @@ done
 if [ ${#casks_to_install[@]} -gt 0 ]; then
     echo "  📦 Installing: ${casks_to_install[*]}"
     brew install --cask "${casks_to_install[@]}" 2>&1 | tee -a "$LOG_FILE" || true
+fi
+
+# =============================================================================
+# OTHER APPS
+# =============================================================================
+
+if ! command -v claude &>/dev/null; then
+    curl -fsSL https://claude.ai/install.sh | bash
+    echo "✅ Claude Code installed"
+else
+    echo "✅ Claude Code (exists)"
 fi
 
 # =============================================================================
