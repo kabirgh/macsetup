@@ -84,6 +84,8 @@ function gcap {
 
 ## -- end git --
 
+alias c="cursor"
+
 alias sz="source ~/.zshrc"
 alias cz="cursor ~/.zshrc"
 '
