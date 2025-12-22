@@ -5,6 +5,17 @@
 # Run standalone: bash scripts/homebrew.sh
 # =============================================================================
 
+BREW_PACKAGES=(
+    git
+    wget
+    curl
+    jq
+    ripgrep
+    fzf
+    mise
+)
+
+
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 source "$SCRIPT_DIR/common.sh"
 
@@ -81,6 +92,12 @@ if command -v mise &>/dev/null; then
         echo "  ✅ uv (exists)"
     else
         mise use --global uv@latest 2>>"$LOG_FILE" && echo "  ✅ uv" || echo "  ❌ uv"
+    fi
+
+    if mise ls rust 2>/dev/null | grep -q "rust"; then
+        echo "  ✅ rust (exists)"
+    else
+        mise use --global rust@latest 2>>"$LOG_FILE" && echo "  ✅ rust" || echo "  ❌ rust"
     fi
     
     # Install global bun packages

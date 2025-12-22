@@ -5,6 +5,19 @@
 # Run standalone: bash scripts/apps.sh
 # =============================================================================
 
+CASK_APPS=(
+    1password
+    brave-browser
+    docker
+    ghostty
+    rectangle
+    scroll-reverser
+    karabiner-elements
+    cursor
+    spotify
+    steam
+)
+
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 source "$SCRIPT_DIR/common.sh"
 

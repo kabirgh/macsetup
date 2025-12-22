@@ -5,6 +5,9 @@
 # Run standalone: bash scripts/git.sh
 # =============================================================================
 
+GIT_NAME="Kabir Khandpur"
+GIT_EMAIL="kabir.khandpur@gmail.com"
+
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 source "$SCRIPT_DIR/common.sh"
 

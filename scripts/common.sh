@@ -14,45 +14,6 @@ fi
 
 LOG_FILE="$SETUP_DIR/setup.log"
 
-# =============================================================================
-# CONFIGURATION
-# =============================================================================
-
-GIT_NAME="Kabir Khandpur"
-GIT_EMAIL="kabir.khandpur@gmail.com"
-
-BREW_PACKAGES=(
-    git
-    wget
-    curl
-    jq
-    ripgrep
-    fzf
-    mise
-)
-
-CASK_APPS=(
-    1password
-    brave-browser
-    docker
-    ghostty
-    rectangle
-    scroll-reverser
-    karabiner-elements
-    cursor
-    spotify
-    steam
-)
-
-CURSOR_EXTENSIONS=(
-    ms-python.python
-    eamodio.gitlens
-)
-
-# Extensions not on Cursor marketplace (install from VSIX)
-CURSOR_VSIX_EXTENSIONS=(
-    "azemoh.one-monokai"
-)
 
 # =============================================================================
 # HELPER FUNCTIONS
