@@ -13,6 +13,8 @@ BREW_PACKAGES=(
     ripgrep
     fzf
     mise
+    pnpm
+    ffmpeg
 )
 
 
@@ -100,21 +102,26 @@ if command -v mise &>/dev/null; then
         mise use --global rust@latest 2>>"$LOG_FILE" && echo "  ✅ rust" || echo "  ❌ rust"
     fi
     
-    # Install global bun packages
-    if command -v bun &>/dev/null; then
-        BUN_GLOBAL_DIR="$HOME/.bun/install/global/node_modules"
-        
-        if [ -d "$BUN_GLOBAL_DIR/@openai/codex" ]; then
-            echo "  ✅ codex (exists)"
-        else
-            CI=1 bun install -g @openai/codex 2>>"$LOG_FILE" && echo "  ✅ codex" || echo "  ❌ codex"
-        fi
-    fi
-    
     add_line_if_missing ~/.zshrc 'eval "$(~/.local/bin/mise activate zsh)"'
 else
     echo ""
     echo "⚠️  mise not found - skipping tool installation"
+fi
+
+
+# =============================================================================
+# BUN PACKAGES
+# =============================================================================
+
+if command -v bun &>/dev/null; then
+    print_section "Installing bun packages"
+    BUN_GLOBAL_DIR="$HOME/.bun/install/global/node_modules"
+    
+    if [ -d "$BUN_GLOBAL_DIR/@openai/codex" ]; then
+        echo "  ✅ codex (exists)"
+    else
+        CI=1 bun install -g @openai/codex 2>>"$LOG_FILE" && echo "  ✅ codex" || echo "  ❌ codex"
+    fi
 fi
 
 # =============================================================================

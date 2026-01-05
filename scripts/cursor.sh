@@ -8,11 +8,13 @@
 CURSOR_EXTENSIONS=(
     eamodio.gitlens
     stkb.rewrap
+    typescriptteam.native-preview
 )
 
 # Extensions not on Cursor marketplace (install from VSIX)
 CURSOR_VSIX_EXTENSIONS=(
     "azemoh.one-monokai"
+    "astro-build.astro-vscode"
 )
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"

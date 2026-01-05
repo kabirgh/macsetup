@@ -16,6 +16,10 @@ CASK_APPS=(
     cursor
     spotify
     steam
+    transmission
+    vlc
+    proxyman
+    firefox
 )
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
