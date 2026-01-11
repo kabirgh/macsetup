@@ -6,7 +6,7 @@
 # =============================================================================
 
 GIT_NAME="Kabir Khandpur"
-GIT_EMAIL="kabir.khandpur@gmail.com"
+GIT_EMAIL="kabirgh@users.noreply.github.com"
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 source "$SCRIPT_DIR/common.sh"
