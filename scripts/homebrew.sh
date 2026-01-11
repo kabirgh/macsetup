@@ -15,6 +15,7 @@ BREW_PACKAGES=(
     mise
     pnpm
     ffmpeg
+    gh
 )
 
 
