@@ -5,24 +5,8 @@
 # Run standalone: bash scripts/apps.sh
 # =============================================================================
 
-CASK_APPS=(
-    1password
-    brave-browser
-    docker
-    ghostty
-    rectangle
-    scroll-reverser
-    karabiner-elements
-    cursor
-    spotify
-    steam
-    transmission
-    vlc
-    proxyman
-    obsidian
-)
-
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+source "$SCRIPT_DIR/../config.sh"
 source "$SCRIPT_DIR/common.sh"
 
 # Only set up error handling if running standalone

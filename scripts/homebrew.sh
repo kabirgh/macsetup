@@ -5,21 +5,8 @@
 # Run standalone: bash scripts/homebrew.sh
 # =============================================================================
 
-BREW_PACKAGES=(
-    git
-    wget
-    curl
-    jq
-    ripgrep
-    fzf
-    mise
-    pnpm
-    ffmpeg
-    gh
-)
-
-
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+source "$SCRIPT_DIR/../config.sh"
 source "$SCRIPT_DIR/common.sh"
 
 # Only set up error handling if running standalone
@@ -62,53 +49,6 @@ if [ ${#packages_to_install[@]} -gt 0 ]; then
     echo "  📦 Installing: ${packages_to_install[*]}"
     brew install "${packages_to_install[@]}" 2>&1 | tee -a "$LOG_FILE" || true
 fi
-
-# =============================================================================
-# MISE TOOLS
-# =============================================================================
-
-if command -v mise &>/dev/null; then
-    print_section "Installing tools via mise"
-    
-    eval "$(mise activate bash)" 2>/dev/null || true
-    
-    # Configure mise settings
-    MISE_CONFIG="$HOME/.config/mise/config.toml"
-    mkdir -p "$(dirname "$MISE_CONFIG")"
-    add_line_if_missing "$MISE_CONFIG" '[settings]'
-    add_line_if_missing "$MISE_CONFIG" 'python.uv_venv_auto = true'
-    
-    # Install tools globally (check if already installed first)
-    if mise ls node 2>/dev/null | grep -q "node"; then
-        echo "  ✅ node (exists)"
-    else
-        mise use --global node@lts 2>>"$LOG_FILE" && echo "  ✅ node" || echo "  ❌ node"
-    fi
-    
-    if mise ls bun 2>/dev/null | grep -q "bun"; then
-        echo "  ✅ bun (exists)"
-    else
-        mise use --global bun@latest 2>>"$LOG_FILE" && echo "  ✅ bun" || echo "  ❌ bun"
-    fi
-    
-    if mise ls uv 2>/dev/null | grep -q "uv"; then
-        echo "  ✅ uv (exists)"
-    else
-        mise use --global uv@latest 2>>"$LOG_FILE" && echo "  ✅ uv" || echo "  ❌ uv"
-    fi
-
-    if mise ls rust 2>/dev/null | grep -q "rust"; then
-        echo "  ✅ rust (exists)"
-    else
-        mise use --global rust@latest 2>>"$LOG_FILE" && echo "  ✅ rust" || echo "  ❌ rust"
-    fi
-    
-    add_line_if_missing ~/.zshrc 'eval "$(~/.local/bin/mise activate zsh)"'
-else
-    echo ""
-    echo "⚠️  mise not found - skipping tool installation"
-fi
-
 
 # =============================================================================
 # BUN PACKAGES
