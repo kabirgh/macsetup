@@ -12,7 +12,7 @@
 #   bash scripts/ssh.sh      - SSH key setup
 #   bash scripts/git.sh      - Git configuration
 #   bash scripts/shell.sh    - ZSH + Oh My Zsh + Powerlevel10k
-#   bash scripts/cursor.sh   - Cursor extensions
+#   bash scripts/vscode.sh   - VS Code extensions
 # =============================================================================
 
 set -euo pipefail
@@ -46,7 +46,7 @@ source "$ROOT_DIR/scripts/apps.sh"
 source "$ROOT_DIR/scripts/ssh.sh"
 source "$ROOT_DIR/scripts/git.sh"
 source "$ROOT_DIR/scripts/shell.sh"
-source "$ROOT_DIR/scripts/cursor.sh"
+source "$ROOT_DIR/scripts/vscode.sh"
 
 # =============================================================================
 # DONE

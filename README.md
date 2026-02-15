@@ -17,7 +17,7 @@ bash scripts/apps.sh      # GUI apps + configs
 bash scripts/ssh.sh       # SSH key
 bash scripts/git.sh       # Git config
 bash scripts/shell.sh     # ZSH + Oh My Zsh + Powerlevel10k
-bash scripts/cursor.sh    # Cursor extensions
+bash scripts/vscode.sh    # VS Code extensions
 ```
 
 ## After running

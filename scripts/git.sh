@@ -20,6 +20,6 @@ print_section "Configuring Git"
 
 git config --global user.name "$GIT_NAME"
 git config --global user.email "$GIT_EMAIL"
-git config --global core.editor "cursor"
+git config --global core.editor "code --wait"
 
 echo "✅ Git configured for $GIT_NAME <$GIT_EMAIL>"

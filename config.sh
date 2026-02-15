@@ -28,7 +28,7 @@ CASK_APPS=(
     rectangle
     scroll-reverser
     karabiner-elements
-    cursor
+    visual-studio-code
     spotify
     steam
     transmission
@@ -38,17 +38,15 @@ CASK_APPS=(
     syncthing-app
 )
 
-# Cursor extensions from marketplace
-CURSOR_EXTENSIONS=(
+# VS Code extensions
+VSCODE_EXTENSIONS=(
+    azemoh.one-monokai
+    dnut.rewrap-revived
     eamodio.gitlens
-    stkb.rewrap
+    astro-build.astro-vscode
+    astral-sh.ty
+    charliermarsh.ruff
     typescriptteam.native-preview
-)
-
-# Cursor extensions installed from VSIX (not on marketplace)
-CURSOR_VSIX_EXTENSIONS=(
-    "azemoh.one-monokai"
-    "astro-build.astro-vscode"
 )
 
 # Tools installed via mise (format: tool@version)

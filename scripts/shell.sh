@@ -84,10 +84,10 @@ function gcap {
 
 ## -- end git --
 
-alias c="cursor"
+alias c="code"
 
 alias sz="source ~/.zshrc"
-alias cz="cursor ~/.zshrc"
+alias cz="code ~/.zshrc"
 '
 
 add_line_if_missing "$ZSHRC" 'source <(fzf --zsh)'
