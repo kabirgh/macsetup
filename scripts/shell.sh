@@ -39,8 +39,7 @@ else
     add_line_if_missing "$ZSHRC" 'ZSH_THEME="powerlevel10k/powerlevel10k"'
 fi
 
-add_block_if_missing "$ZSHRC" '# Aliases
-## -- start git --
+add_block_if_missing "$ZSHRC" '## -- start git --
 unalias gb
 function gb {
   git --no-pager branch | cat -n
@@ -73,7 +72,7 @@ function grc {
   git rebase --continue
 }
 
-### misc 
+### misc
 function grso {
   git reset --soft HEAD~${1:-1}
 }
@@ -81,14 +80,13 @@ function grso {
 function gcap {
   git add . && git commit -m "$1" && ggp
 }
+## -- end git --'
 
-## -- end git --
-
+add_block_if_missing "$ZSHRC" '## -- start shortcuts --
 alias c="code"
-
 alias sz="source ~/.zshrc"
 alias cz="code ~/.zshrc"
-'
+## -- end shortcuts --'
 
 add_line_if_missing "$ZSHRC" 'source <(fzf --zsh)'
 

@@ -34,12 +34,24 @@ add_line_if_missing() {
     fi
 }
 
-# Add a block to a file only if it doesn't already exist
+# Add a block to a file, using marker comments to detect and replace existing blocks.
+# If a block with the same start marker exists, it gets replaced. Otherwise appended.
+# Markers are detected as lines starting with "## -- start" and "## -- end".
 add_block_if_missing() {
     local file="$1"
     local block="$2"
     [ -f "$file" ] || touch "$file"
-    if [[ "$(cat "$file")" != *"$block"* ]]; then
+
+    # Extract the start/end marker lines from the block
+    local start_marker end_marker
+    start_marker=$(echo "$block" | grep -m1 '^## -- start')
+    end_marker=$(echo "$block" | grep -m1 '^## -- end')
+
+    if [[ -n "$start_marker" ]] && [[ -n "$end_marker" ]] && grep -qF "$start_marker" "$file" 2>/dev/null; then
+        # Remove old block between markers (inclusive), then append new block
+        sed -i '' "/$start_marker/,/$end_marker/d" "$file"
+        echo "$block" >> "$file"
+    elif [[ "$(cat "$file")" != *"$block"* ]]; then
         echo "$block" >> "$file"
     fi
 }
