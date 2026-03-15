@@ -23,6 +23,7 @@ BREW_PACKAGES=(
 CASK_APPS=(
     1password
     brave-browser
+    calibre
     docker
     ghostty
     rectangle
