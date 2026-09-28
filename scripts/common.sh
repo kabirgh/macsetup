@@ -34,6 +34,38 @@ add_line_if_missing() {
     fi
 }
 
+# Install Homebrew if needed, then make its actual installation path available
+# in this process and future login shells.
+ensure_homebrew() {
+    local brew_bin installer shellenv
+
+    if command -v brew >/dev/null 2>&1; then
+        brew_bin="$(command -v brew)"
+    elif [ -x /opt/homebrew/bin/brew ]; then
+        brew_bin=/opt/homebrew/bin/brew
+    elif [ -x /usr/local/bin/brew ]; then
+        brew_bin=/usr/local/bin/brew
+    else
+        echo "Installing Homebrew..."
+        installer="$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" || return 1
+        NONINTERACTIVE=1 /bin/bash -c "$installer" || return 1
+
+        if [ -x /opt/homebrew/bin/brew ]; then
+            brew_bin=/opt/homebrew/bin/brew
+        elif [ -x /usr/local/bin/brew ]; then
+            brew_bin=/usr/local/bin/brew
+        else
+            echo "Homebrew installer finished, but brew was not found." >&2
+            return 1
+        fi
+    fi
+
+    shellenv="$("$brew_bin" shellenv)" || return 1
+    eval "$shellenv"
+    add_line_if_missing "$HOME/.zprofile" "eval \"\$($brew_bin shellenv)\""
+    echo "✅ Homebrew ($brew_bin)"
+}
+
 # Add a block to a file, using marker comments to detect and replace existing blocks.
 # If a block with the same start marker exists, it gets replaced. Otherwise appended.
 # Markers are detected as lines starting with "## -- start" and "## -- end".

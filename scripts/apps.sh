@@ -37,19 +37,23 @@ done
 
 if [ ${#casks_to_install[@]} -gt 0 ]; then
     echo "  📦 Installing: ${casks_to_install[*]}"
-    brew install --cask "${casks_to_install[@]}" 2>&1 | tee -a "$LOG_FILE" || true
+    brew install --cask "${casks_to_install[@]}" 2>&1 | tee -a "$LOG_FILE"
 fi
 
 # =============================================================================
-# OTHER APPS
+# TERMINAL AI TOOLS
 # =============================================================================
 
-if ! command -v claude &>/dev/null; then
-    curl -fsSL https://claude.ai/install.sh | bash
-    echo "✅ Claude Code installed"
-else
-    echo "✅ Claude Code (exists)"
-fi
+print_section "Installing terminal AI tools (${#CLI_CASKS[@]} total)"
+
+for cli_cask in "${CLI_CASKS[@]}"; do
+    if brew list --cask "$cli_cask" &>/dev/null; then
+        echo "  ✅ $cli_cask (brew)"
+    else
+        brew install --cask "$cli_cask" 2>&1 | tee -a "$LOG_FILE"
+        echo "  ✅ $cli_cask installed"
+    fi
+done
 
 # =============================================================================
 # KARABINER CONFIG

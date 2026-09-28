@@ -17,12 +17,15 @@ BREW_PACKAGES=(
     pnpm
     ffmpeg
     gh
+    arduino-cli
 )
 
 # GUI applications installed via Homebrew Cask
 CASK_APPS=(
     1password
     brave-browser
+    chatgpt
+    claude
     calibre
     docker
     ghostty
@@ -37,6 +40,13 @@ CASK_APPS=(
     proxyman
     obsidian
     syncthing-app
+    arduino-ide
+)
+
+# Terminal AI tools installed as Homebrew casks.
+CLI_CASKS=(
+    claude-code
+    codex
 )
 
 # VS Code extensions
@@ -57,4 +67,3 @@ MISE_TOOLS=(
     uv@latest
     rust@latest
 )
-

@@ -84,6 +84,7 @@ function gcap {
 
 add_block_if_missing "$ZSHRC" '## -- start shortcuts --
 alias c="code"
+alias cl="claude"
 alias sz="source ~/.zshrc"
 alias cz="code ~/.zshrc"
 ## -- end shortcuts --'
