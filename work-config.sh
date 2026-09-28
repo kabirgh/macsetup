@@ -24,6 +24,7 @@ WORK_CASK_APPS=(
     scroll-reverser
     karabiner-elements
     spotify
+    raycast
 )
 
 # Extensions from the personal VS Code profile.

@@ -39,6 +39,7 @@ CASK_APPS=(
     vlc
     proxyman
     obsidian
+    raycast
     syncthing-app
     arduino-ide
 )
