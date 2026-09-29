@@ -41,6 +41,11 @@ CASK_APPS=(
     raycast
 )
 
+# Terminal AI tools installed with their native installers (see scripts/ai.sh)
+AI_CLIS=(
+    claude
+)
+
 # VS Code extensions
 VSCODE_EXTENSIONS=(
     azemoh.one-monokai
@@ -71,6 +76,10 @@ if [ "$PROFILE" = "personal" ]; then
         obsidian
         syncthing-app
         arduino-ide
+    )
+
+    AI_CLIS+=(
+        codex
     )
 
     VSCODE_EXTENSIONS+=(

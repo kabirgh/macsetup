@@ -10,6 +10,7 @@
 #   bash scripts/shell.sh                   - ZSH + Oh My Zsh + Powerlevel10k
 #   PROFILE=work bash scripts/mise.sh       - Mise activation (+ personal tools)
 #   PROFILE=work bash scripts/apps.sh       - GUI apps and configs
+#   PROFILE=work bash scripts/ai.sh         - Terminal AI tools (native installers)
 #   PROFILE=work bash scripts/git.sh        - Git configuration
 #   PROFILE=personal bash scripts/ssh.sh    - SSH key setup (personal only)
 #   PROFILE=work bash scripts/vscode.sh     - VS Code extensions
@@ -59,6 +60,7 @@ source "$ROOT_DIR/scripts/homebrew.sh"
 source "$ROOT_DIR/scripts/shell.sh"
 source "$ROOT_DIR/scripts/mise.sh"
 source "$ROOT_DIR/scripts/apps.sh"
+source "$ROOT_DIR/scripts/ai.sh"
 source "$ROOT_DIR/scripts/git.sh"
 if [ "$PROFILE" = "personal" ]; then
     source "$ROOT_DIR/scripts/ssh.sh"

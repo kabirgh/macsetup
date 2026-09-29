@@ -15,6 +15,7 @@ PROFILE=work bash scripts/homebrew.sh   # Homebrew + CLI tools
 bash scripts/shell.sh                   # ZSH + Oh My Zsh + Powerlevel10k
 PROFILE=work bash scripts/mise.sh       # mise activation (+ global tools on personal)
 PROFILE=work bash scripts/apps.sh       # GUI apps + configs
+PROFILE=work bash scripts/ai.sh         # Terminal AI tools (native installers)
 PROFILE=work bash scripts/git.sh        # Git config
 PROFILE=personal bash scripts/ssh.sh    # SSH key (personal only)
 PROFILE=work bash scripts/vscode.sh     # VS Code extensions
@@ -22,9 +23,9 @@ PROFILE=work bash scripts/vscode.sh     # VS Code extensions
 
 ## What each profile does
 
-Both profiles apply the macOS preferences (Finder hidden files, path bar and status bar, faster key repeat, tap to click), install Homebrew and the shared CLI tools, apps and VS Code extensions, and set up the shell: Oh My Zsh, Powerlevel10k, Git shortcuts, fzf integration and mise activation in `~/.zshrc`. Saved Karabiner, Scroll Reverser and Rectangle configs are applied when those apps are selected, replacing the apps' existing settings. Apps already installed outside Homebrew, for example by IT, are left as they are.
+Both profiles apply the macOS preferences (Finder hidden files, path bar and status bar, faster key repeat, tap to click), install Homebrew and the shared CLI tools, apps and VS Code extensions, install Claude Code with its native installer, and set up the shell: Oh My Zsh, Powerlevel10k, Git shortcuts, fzf integration and mise activation in `~/.zshrc`. Saved Karabiner, Scroll Reverser and Rectangle configs are applied when those apps are selected, replacing the apps' existing settings. Apps already installed outside Homebrew, for example by IT, are left as they are.
 
-The personal profile also installs its extra apps, the Astro VS Code extension and global mise runtimes, adds Rectangle and Scroll Reverser as login items, sets the global Git identity and creates an SSH key.
+The personal profile also installs its extra apps, the `codex` CLI, the Astro VS Code extension and global mise runtimes, adds Rectangle and Scroll Reverser as login items, sets the global Git identity and creates an SSH key.
 
 The work profile leaves login items, global Git identity and SSH configuration alone. Use project mise configuration to select runtimes.
 
@@ -35,7 +36,7 @@ The work profile leaves login items, global Git identity and SSH configuration a
 3. Personal: add the SSH key to GitHub
 4. Open Karabiner-Elements and allow its driver extension and Input Monitoring in System Settings
 
-The personal setup installs Claude Desktop and ChatGPT Desktop, which includes the Codex interface.
+The personal setup installs Claude Desktop and ChatGPT Desktop, which includes the Codex interface. The `claude` and `codex` terminal commands come from their native installers, which install into `~/.local/bin` and update themselves; `~/.local/bin` is added to `PATH` in `~/.zprofile` if it isn't already there. A tool already in `~/.local/bin` is skipped. If a Homebrew, npm or bun copy is also installed, setup warns so you can remove it.
 
 ## Work laptop
 
