@@ -84,7 +84,7 @@ echo "  - Restart your terminal (or: source ~/.zshrc)"
 if [ "$PROFILE" = "personal" ]; then
     echo "  - Add SSH key to GitHub: https://github.com/settings/keys"
 else
-    echo "  - Set your work Git identity in each work repository (see README.md)"
+    echo "  - Keep work repositories under $WORK_GIT_DIR (uses ~/.gitconfig-work)"
     echo "  - Set up a work SSH key if needed (see README.md)"
 fi
 if cask_selected karabiner-elements; then

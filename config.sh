@@ -17,6 +17,10 @@ esac
 GIT_NAME="Kabir Khandpur"
 GIT_EMAIL="kabirgh@users.noreply.github.com"
 
+# Folder for work repositories, which use the work Git identity. Leave unset
+# to be asked (e.g. ~/acme); the answer is remembered for later runs.
+WORK_GIT_DIR="${WORK_GIT_DIR:-}"
+
 # CLI tools installed via Homebrew
 BREW_PACKAGES=(
     git

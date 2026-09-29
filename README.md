@@ -44,11 +44,11 @@ Review the work selections in `config.sh` against your employer's approved softw
 
 ### Git identity
 
-Set your work Git identity separately in each work repository:
+`git.sh` asks which folder holds your work repositories, for example `~/acme` (default `~/work`), and points every repository under it at `~/.gitconfig-work`. The answer is remembered and offered as the default next time; entering a different folder moves the work identity there. It also asks for your work email the first time. To skip the folder prompt, set it up front: `WORK_GIT_DIR=~/acme ./setup.sh --work`. To set or change the identity later:
 
 ```bash
-git -C /path/to/work/repo config --local user.name "Your Work Name"
-git -C /path/to/work/repo config --local user.email "you@company.example"
+git config --file ~/.gitconfig-work user.name "Your Work Name"
+git config --file ~/.gitconfig-work user.email "you@company.example"
 ```
 
 ### SSH
