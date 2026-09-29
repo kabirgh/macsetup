@@ -47,6 +47,13 @@ ensure_homebrew() {
         brew_bin=/usr/local/bin/brew
     else
         echo "Installing Homebrew..."
+        # Under NONINTERACTIVE the installer never prompts for a password
+        # (sudo -n), so unlock sudo first or it can't create its prefix.
+        if ! sudo -v; then
+            echo "❌ Installing Homebrew needs an administrator account." >&2
+            echo "   Get admin rights (or a Homebrew install) from IT, then rerun." >&2
+            return 1
+        fi
         installer="$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" || return 1
         NONINTERACTIVE=1 /bin/bash -c "$installer" || return 1
 
