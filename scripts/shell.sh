@@ -63,7 +63,8 @@ function gbd {
 
 ### rebase
 function gri {
-  branch=${1:-master}
+  branch=${1:-$(git symbolic-ref --short refs/remotes/origin/HEAD 2>/dev/null | sed "s|^origin/||")}
+  branch=${branch:-main}
   git fetch origin $branch:$branch
   git rebase -i $branch
 }
