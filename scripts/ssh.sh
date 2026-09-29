@@ -2,10 +2,11 @@
 
 # =============================================================================
 # SSH Key Setup
-# Run standalone: bash scripts/ssh.sh
+# Run standalone: PROFILE=personal bash scripts/ssh.sh
 # =============================================================================
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+source "$SCRIPT_DIR/../config.sh"
 source "$SCRIPT_DIR/common.sh"
 
 # Only set up error handling if running standalone

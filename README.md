@@ -1,42 +1,47 @@
 # macOS Setup
 
-Personal macOS setup scripts, plus a separate work laptop profile.
-
-## Personal laptop
+macOS setup scripts with a personal and a work profile. Both profiles run the same scripts; `config.sh` holds the shared lists plus each profile's extras.
 
 ```bash
 ./setup.sh --personal
+./setup.sh --work
 ```
 
-Or run individual scripts:
+Or run individual scripts with a profile:
 
 ```bash
-bash scripts/macos.sh     # macOS preferences
-bash scripts/homebrew.sh  # Homebrew + CLI tools + mise
-bash scripts/apps.sh      # GUI apps + configs
-bash scripts/ssh.sh       # SSH key
-bash scripts/git.sh       # Git config
-bash scripts/shell.sh     # ZSH + Oh My Zsh + Powerlevel10k
-bash scripts/vscode.sh    # VS Code extensions
+bash scripts/macos.sh                   # macOS preferences
+PROFILE=work bash scripts/homebrew.sh   # Homebrew + CLI tools
+bash scripts/shell.sh                   # ZSH + Oh My Zsh + Powerlevel10k
+PROFILE=work bash scripts/mise.sh       # mise activation (+ global tools on personal)
+PROFILE=work bash scripts/apps.sh       # GUI apps + configs
+PROFILE=work bash scripts/git.sh        # Git config
+PROFILE=personal bash scripts/ssh.sh    # SSH key (personal only)
+PROFILE=work bash scripts/vscode.sh     # VS Code extensions
 ```
+
+## What each profile does
+
+Both profiles apply the macOS preferences (Finder hidden files, path bar and status bar, faster key repeat, tap to click), install Homebrew and the shared CLI tools, apps and VS Code extensions, and set up the shell: Oh My Zsh, Powerlevel10k, Git shortcuts, fzf integration and mise activation in `~/.zshrc`. Saved Karabiner, Scroll Reverser and Rectangle configs are applied when those apps are selected, replacing the apps' existing settings. Apps already installed outside Homebrew, for example by IT, are left as they are.
+
+The personal profile also installs its extra apps, the Astro VS Code extension and global mise runtimes, adds Rectangle and Scroll Reverser as login items, sets the global Git identity and creates an SSH key.
+
+The work profile leaves login items, global Git identity and SSH configuration alone. Use project mise configuration to select runtimes.
 
 ## After running
 
 1. Log out/in (for key repeat settings)
 2. Restart terminal or `source ~/.zshrc`
-3. Add SSH key to GitHub
+3. Personal: add the SSH key to GitHub
+4. Open Karabiner-Elements and allow its driver extension and Input Monitoring in System Settings
 
-The personal setup installs Claude Desktop and ChatGPT Desktop, which includes the Codex interface. It also installs the separate `claude-code` and `codex` Homebrew casks for the `claude` and `codex` terminal commands. An existing CLI from another installer does not replace the Homebrew install.
+The personal setup installs Claude Desktop and ChatGPT Desktop, which includes the Codex interface.
 
 ## Work laptop
 
-Review the selections in `work-config.sh` against your employer's approved software list before running:
+Review the work selections in `config.sh` against your employer's approved software list before running. Karabiner-Elements needs a driver extension, which device management may block; if so, remove it from `CASK_APPS`.
 
-```bash
-./setup.sh --work
-```
-
-The work profile applies the same macOS preferences as the personal setup: Finder hidden files, path bar and status bar, faster key repeat, and tap to click. It installs Homebrew if needed and adds its path to `~/.zprofile`, then installs the selected CLI tools, apps, and VS Code extensions. It applies the saved Karabiner and Scroll Reverser configurations when selected, replacing those apps' existing settings. It also runs the same shell setup: Oh My Zsh, Powerlevel10k, Git shortcuts, and fzf integration in `~/.zshrc`. Work installs and activates mise in Zsh; use project mise configuration to select runtimes. The personal setup uses the same Homebrew installation helper. The work profile leaves login items, other app settings, global Git identity, and SSH configuration alone.
+### Git identity
 
 Set your work Git identity separately in each work repository:
 
@@ -44,6 +49,8 @@ Set your work Git identity separately in each work repository:
 git -C /path/to/work/repo config --local user.name "Your Work Name"
 git -C /path/to/work/repo config --local user.email "you@company.example"
 ```
+
+### SSH
 
 If your employer uses SSH for Git, create a dedicated work key with `ssh-keygen -t ed25519 -f ~/.ssh/id_ed25519_work` (which prompts for a passphrase). Add a host-specific entry to `~/.ssh/config`, replacing the example host with your work Git host:
 

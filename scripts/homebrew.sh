@@ -2,7 +2,7 @@
 
 # =============================================================================
 # Homebrew and CLI Packages
-# Run standalone: bash scripts/homebrew.sh
+# Run standalone: PROFILE=personal|work bash scripts/homebrew.sh
 # =============================================================================
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"

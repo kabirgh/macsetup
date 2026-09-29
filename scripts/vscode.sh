@@ -2,7 +2,7 @@
 
 # =============================================================================
 # VS Code Extensions
-# Run standalone: bash scripts/vscode.sh
+# Run standalone: PROFILE=personal|work bash scripts/vscode.sh
 # =============================================================================
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"

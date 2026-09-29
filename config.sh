@@ -2,8 +2,20 @@
 
 # =============================================================================
 # Package Lists Configuration
-# All installable packages defined in one place for easy editing
+# Shared lists apply to both profiles; PROFILE (personal | work) adds extras.
+# Review the work selections against your employer's approved software list.
 # =============================================================================
+
+case "${PROFILE:-}" in
+    personal|work) ;;
+    *)
+        echo "PROFILE must be 'personal' or 'work', e.g. PROFILE=work bash scripts/apps.sh" >&2
+        exit 2
+        ;;
+esac
+
+GIT_NAME="Kabir Khandpur"
+GIT_EMAIL="kabirgh@users.noreply.github.com"
 
 # CLI tools installed via Homebrew
 BREW_PACKAGES=(
@@ -15,39 +27,18 @@ BREW_PACKAGES=(
     fzf
     mise
     pnpm
-    ffmpeg
     gh
-    arduino-cli
 )
 
 # GUI applications installed via Homebrew Cask
 CASK_APPS=(
-    1password
-    brave-browser
-    chatgpt
-    claude
-    calibre
-    docker
     ghostty
     rectangle
     scroll-reverser
     karabiner-elements
     visual-studio-code
     spotify
-    steam
-    transmission
-    vlc
-    proxyman
-    obsidian
     raycast
-    syncthing-app
-    arduino-ide
-)
-
-# Terminal AI tools installed as Homebrew casks.
-CLI_CASKS=(
-    claude-code
-    codex
 )
 
 # VS Code extensions
@@ -55,16 +46,56 @@ VSCODE_EXTENSIONS=(
     azemoh.one-monokai
     dnut.rewrap-revived
     eamodio.gitlens
-    astro-build.astro-vscode
     astral-sh.ty
     charliermarsh.ruff
     typescriptteam.native-preview
 )
 
-# Tools installed via mise (format: tool@version)
-MISE_TOOLS=(
-    node@lts
-    bun@latest
-    uv@latest
-    rust@latest
-)
+if [ "$PROFILE" = "personal" ]; then
+    BREW_PACKAGES+=(
+        ffmpeg
+        arduino-cli
+    )
+
+    CASK_APPS+=(
+        1password
+        brave-browser
+        chatgpt
+        claude
+        calibre
+        docker
+        steam
+        transmission
+        vlc
+        proxyman
+        obsidian
+        syncthing-app
+        arduino-ide
+    )
+
+    VSCODE_EXTENSIONS+=(
+        astro-build.astro-vscode
+    )
+
+    # Tools installed globally via mise (format: tool@version)
+    MISE_TOOLS=(
+        node@lts
+        bun@latest
+        uv@latest
+        rust@latest
+    )
+
+    SET_LOGIN_ITEMS=true
+else
+    BREW_PACKAGES+=(
+        uv
+        fd
+        bat
+    )
+
+    # Work runtimes come from each project's mise configuration.
+    MISE_TOOLS=()
+
+    # Leave login items to the employer's device management.
+    SET_LOGIN_ITEMS=false
+fi

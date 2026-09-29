@@ -11,8 +11,9 @@ source "$SCRIPT_DIR/common.sh"
 # Only set up error handling if running standalone
 if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
     setup_standalone
-    print_section "Configuring macOS preferences"
 fi
+
+print_section "Configuring macOS preferences"
 
 # Show hidden files in Finder
 defaults write com.apple.finder AppleShowAllFiles -bool true

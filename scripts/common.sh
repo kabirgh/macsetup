@@ -102,7 +102,7 @@ add_login_item() {
     
     if [ ! -d "$app_path" ]; then
         echo "  ⚠️  $app_name not found"
-        return 1
+        return 0
     fi
     
     # Check if already a login item
@@ -112,6 +112,15 @@ add_login_item() {
         osascript -e "tell application \"System Events\" to make login item at end with properties {path:\"$app_path\", hidden:false}" 2>/dev/null
         echo "  ✅ $app_name (added)"
     fi
+}
+
+# Succeed if a cask is in CASK_APPS for the current profile
+cask_selected() {
+    local selected
+    for selected in "${CASK_APPS[@]}"; do
+        [ "$selected" = "$1" ] && return 0
+    done
+    return 1
 }
 
 # Setup error handling for standalone scripts

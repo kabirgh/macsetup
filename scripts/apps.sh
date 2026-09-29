@@ -2,7 +2,7 @@
 
 # =============================================================================
 # GUI Applications and Configs
-# Run standalone: bash scripts/apps.sh
+# Run standalone: PROFILE=personal|work bash scripts/apps.sh
 # =============================================================================
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -25,9 +25,10 @@ for app in "${CASK_APPS[@]}"; do
     if brew list --cask "$app" &>/dev/null; then
         echo "  ✅ $app (brew)"
     else
-        # Check if app exists in /Applications (handles manually installed apps)
+        # Skip apps installed outside Homebrew (manually or by IT), which
+        # brew install --cask would refuse to overwrite
         app_name=$(brew info --cask "$app" 2>/dev/null | grep -o '[A-Za-z0-9 ]*\.app' | head -1 || true)
-        if [ -n "$app_name" ] && [ -d "/Applications/$app_name" ]; then
+        if [ -n "$app_name" ] && { [ -d "/Applications/$app_name" ] || [ -d "$HOME/Applications/$app_name" ]; }; then
             echo "  ✅ $app (manual)"
         else
             casks_to_install+=("$app")
@@ -41,88 +42,66 @@ if [ ${#casks_to_install[@]} -gt 0 ]; then
 fi
 
 # =============================================================================
-# TERMINAL AI TOOLS
+# APP CONFIGS (only for selected apps)
 # =============================================================================
 
-print_section "Installing terminal AI tools (${#CLI_CASKS[@]} total)"
+print_section "Applying app configs"
 
-for cli_cask in "${CLI_CASKS[@]}"; do
-    if brew list --cask "$cli_cask" &>/dev/null; then
-        echo "  ✅ $cli_cask (brew)"
+# Copy a saved config file into place, replacing the app's existing settings
+apply_config_file() {
+    local name="$1" src="$2" dest="$3"
+    if [ ! -f "$src" ]; then
+        echo "⚠️  No $(basename "$src") found - skipping"
+    elif [ ! -f "$dest" ] || ! cmp -s "$src" "$dest"; then
+        mkdir -p "$(dirname "$dest")"
+        cp "$src" "$dest"
+        echo "✅ $name config applied"
     else
-        brew install --cask "$cli_cask" 2>&1 | tee -a "$LOG_FILE"
-        echo "  ✅ $cli_cask installed"
+        echo "✅ $name config (unchanged)"
     fi
-done
+}
 
-# =============================================================================
-# KARABINER CONFIG
-# =============================================================================
-
-KARABINER_SRC="$SETUP_DIR/karabiner.json"
-KARABINER_DEST="$HOME/.config/karabiner/karabiner.json"
-
-if [ -f "$KARABINER_SRC" ]; then
-    mkdir -p "$HOME/.config/karabiner"
-    if [ ! -f "$KARABINER_DEST" ] || ! diff -q "$KARABINER_SRC" "$KARABINER_DEST" &>/dev/null; then
-        cp "$KARABINER_SRC" "$KARABINER_DEST"
-        echo "✅ Karabiner config applied"
-    else
-        echo "✅ Karabiner config (unchanged)"
-    fi
-else
-    echo "⚠️  No karabiner.json found - skipping"
+if cask_selected karabiner-elements; then
+    apply_config_file "Karabiner" "$SETUP_DIR/karabiner.json" "$HOME/.config/karabiner/karabiner.json"
 fi
 
-# =============================================================================
-# SCROLL REVERSER CONFIG
-# =============================================================================
-
-SCROLL_REVERSER_SRC="$SETUP_DIR/scroll-reverser.plist"
-SCROLL_REVERSER_DEST="$HOME/Library/Preferences/com.pilotmoon.scroll-reverser.plist"
-
-if [ -f "$SCROLL_REVERSER_SRC" ]; then
-    if [ ! -f "$SCROLL_REVERSER_DEST" ] || ! diff -q "$SCROLL_REVERSER_SRC" "$SCROLL_REVERSER_DEST" &>/dev/null; then
-        cp "$SCROLL_REVERSER_SRC" "$SCROLL_REVERSER_DEST"
-        echo "✅ Scroll Reverser config applied"
-    else
-        echo "✅ Scroll Reverser config (unchanged)"
-    fi
-else
-    echo "⚠️  No scroll-reverser.plist found - skipping"
+if cask_selected scroll-reverser; then
+    apply_config_file "Scroll Reverser" "$SETUP_DIR/scroll-reverser.plist" \
+        "$HOME/Library/Preferences/com.pilotmoon.scroll-reverser.plist"
 fi
 
-# =============================================================================
-# RECTANGLE CONFIG
-# =============================================================================
+if cask_selected rectangle; then
+    RECTANGLE_SRC="$SETUP_DIR/rectangle.plist"
+    if [ -f "$RECTANGLE_SRC" ]; then
+        defaults import com.knollsoft.Rectangle "$RECTANGLE_SRC"
+        echo "✅ Rectangle config applied"
+    else
+        echo "⚠️  No rectangle.plist found - skipping"
+    fi
+fi
 
-RECTANGLE_SRC="$SETUP_DIR/rectangle.plist"
-
-if [ -f "$RECTANGLE_SRC" ]; then
-    defaults import com.knollsoft.Rectangle "$RECTANGLE_SRC"
-    echo "✅ Rectangle config applied"
-else
-    echo "⚠️  No rectangle.plist found - skipping"
+if cask_selected ghostty; then
+    GHOSTTY_CONFIG="$HOME/.config/ghostty/config"
+    if [ ! -f "$GHOSTTY_CONFIG" ]; then
+        mkdir -p "$(dirname "$GHOSTTY_CONFIG")"
+        echo "cursor-style = bar" > "$GHOSTTY_CONFIG"
+        echo "✅ Ghostty config created"
+    else
+        echo "✅ Ghostty config (exists)"
+    fi
 fi
 
 # =============================================================================
 # LOGIN ITEMS (Auto-start apps)
 # =============================================================================
 
-print_section "Configuring login items"
+if [ "$SET_LOGIN_ITEMS" = true ]; then
+    print_section "Configuring login items"
 
-add_login_item "/Applications/Scroll Reverser.app"
-add_login_item "/Applications/Rectangle.app"
-
-# =============================================================================
-# GHOSTTY CONFIG
-# =============================================================================
-
-GHOSTTY_CONFIG="$HOME/.config/ghostty/config"
-if [ ! -f "$GHOSTTY_CONFIG" ]; then
-    mkdir -p "$(dirname "$GHOSTTY_CONFIG")"
-    echo "cursor-style = bar" > "$GHOSTTY_CONFIG"
-    echo "✅ Ghostty config created"
-else
-    echo "✅ Ghostty config (exists)"
+    if cask_selected scroll-reverser; then
+        add_login_item "/Applications/Scroll Reverser.app"
+    fi
+    if cask_selected rectangle; then
+        add_login_item "/Applications/Rectangle.app"
+    fi
 fi
