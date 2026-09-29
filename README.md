@@ -23,7 +23,7 @@ PROFILE=work bash scripts/vscode.sh     # VS Code extensions
 
 ## What each profile does
 
-Both profiles apply the macOS preferences (Finder hidden files, path bar and status bar, faster key repeat, tap to click), install Homebrew and the shared CLI tools, apps and VS Code extensions, install Claude Code with its native installer, and set up the shell: Oh My Zsh, Powerlevel10k, Git shortcuts, fzf integration and mise activation in `~/.zshrc`. Saved Karabiner, Scroll Reverser and Rectangle configs are applied when those apps are selected, replacing the apps' existing settings. Apps already installed outside Homebrew, for example by IT, are left as they are.
+Both profiles apply the macOS preferences (Finder path bar and status bar, faster key repeat, tap to click), install Homebrew and the shared CLI tools, apps and VS Code extensions, install Claude Code with its native installer, and set up the shell: Oh My Zsh, Powerlevel10k, Git shortcuts, fzf integration and mise activation in `~/.zshrc`. Saved Karabiner, Scroll Reverser and Rectangle configs are applied when those apps are selected, replacing the apps' existing settings. Apps already installed outside Homebrew, for example by IT, are left as they are.
 
 The personal profile also installs its extra apps, the `codex` CLI, the Astro VS Code extension and global mise runtimes, adds Rectangle and Scroll Reverser as login items, sets the global Git identity and creates an SSH key.
 

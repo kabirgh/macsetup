@@ -15,9 +15,6 @@ fi
 
 print_section "Configuring macOS preferences"
 
-# Show hidden files in Finder
-defaults write com.apple.finder AppleShowAllFiles -bool true
-
 # Show path bar and status bar in Finder
 defaults write com.apple.finder ShowPathbar -bool true
 defaults write com.apple.finder ShowStatusBar -bool true
